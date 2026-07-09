@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 
-const Header = () => {
+const Header = ({ cityName }) => {
   return (
     <View style={styles.headerContainer}>
       <View style={styles.locationBox}>
@@ -9,7 +9,7 @@ const Header = () => {
           source={require('../assets/map.png')}
           style={styles.iconImage}
         />
-        <Text style={styles.cityName}>Fortaleza</Text>
+        <Text style={styles.cityName}>{cityName}</Text>
         <Text style={styles.dropdownText}>▾</Text>
       </View>
 

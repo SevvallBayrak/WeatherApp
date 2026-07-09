@@ -1,24 +1,33 @@
 import { StyleSheet, Text, View, Image, ScrollView } from 'react-native'
 import React from 'react'
 
-const Today = () => {
+const Today = ({ weatherData }) => {
   const currentHour = new Date().getHours();
+  const currentDate = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric' }).format(new Date());
+  const times = weatherData?.hourly?.time || [];
+  const temperatures = weatherData?.hourly?.temperature_2m || [];
 
-  const hourlyData = [
-    { id: '0', degree: '30°C', image: require('../assets/Group 650.png'), time: '12.00', hourNumber: 12 },
-    { id: '5', degree: '25°C', image: require('../assets/Group 647.png'), time: '13.00', hourNumber: 13 },
-    { id: '6', degree: '27°C', image: require('../assets/Group 647.png'), time: '14.00', hourNumber: 14 },
-    { id: '1', degree: '29°C', image: require('../assets/Group 650.png'), time: '15.00', hourNumber: 15 },
-    { id: '2', degree: '26°C', image: require('../assets/Group 650.png'), time: '16.00', hourNumber: 16 },
-    { id: '3', degree: '24°C', image: require('../assets/Group 647.png'), time: '17.00', hourNumber: 17 },
-    { id: '4', degree: '23°C', image: require('../assets/Group 655.png'), time: '18.00', hourNumber: 18 },
-  ];
+  const hourlyData = [0, 1, 2, 3, 4, 5, 6].map((index) => {
+    const fullTime = times[index] || "";
+    
+    const formattedTime = fullTime.split("T")[1] || "00:00"; 
+  
+    const hourNumber = parseInt(formattedTime.split(":")[0]);
+
+    return {
+      id: index.toString(),
+      degree: `${temperatures[index] || 0}°C`,
+      image: index % 2 === 0 ? require('../assets/Group 650.png') : require('../assets/Group 647.png'),
+      time: formattedTime,
+      hourNumber: hourNumber
+    };
+  });
 
   return (
     <View style={styles.maincontainer}>
       <View style= {styles.titleRow}>
         <Text style={styles.texttoday}>today</Text>
-        <Text style={styles.text}>Mar,9</Text>
+        <Text style={styles.text}>{currentDate}</Text>
       </View>
       <ScrollView
         horizontal

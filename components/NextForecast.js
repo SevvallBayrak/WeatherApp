@@ -1,8 +1,12 @@
 import { StyleSheet, Text, View, Image} from 'react-native'
 import React from 'react'
 
-const NextForecast = () => {
-return (
+const NextForecast = ({ weatherData }) => {
+  // 1. 🎯 API'den gelen saatlik sıcaklık listesini güvenle alıyoruz
+  const temperatures = weatherData?.hourly?.temperature_2m || [];
+  const tomorrowTemp = temperatures[24] !== undefined ? `${temperatures[24]}°C` : "0°C";
+  const nextDayTemp = temperatures[48] !== undefined ? `${temperatures[48]}°C` : "0°C";
+  return (
 <View style={styles.wrappercont}>
 <View style={styles.Container}>
 <View style={styles.headercont}>
@@ -17,7 +21,7 @@ source ={require ('../assets/calendar.png')}
 source ={require ('../assets/Big rain drops.png')}
 />
 <View style={styles.derececont}>
-<Text style={styles.text}>13°C</Text>
+<Text style={styles.text}>{tomorrowTemp}</Text>
 <Text style={styles.textsoluk}> 10°C</Text>
 </View>
 </View>
@@ -27,7 +31,7 @@ source ={require ('../assets/Big rain drops.png')}
 source ={require ('../assets/Cloud 3 zap.png')}
 />
 <View style={styles.derececont}>
-<Text style={styles.text}>17°C</Text>
+<Text style={styles.text}>{nextDayTemp}</Text>
 <Text style={styles.textsoluk}> 12°C</Text>
 </View>
 </View>
@@ -65,7 +69,9 @@ mondaycont:{
   marginTop: 5,
 flexDirection: 'row',
 alignItems: 'center',
-gap: 65,
+justifyContent: 'space-between',
+width: '100%',
+paddingHorizontal: 20
 },
 text:{
 color: '#fff',
