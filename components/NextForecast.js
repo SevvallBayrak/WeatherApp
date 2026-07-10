@@ -2,10 +2,10 @@ import { StyleSheet, Text, View, Image} from 'react-native'
 import React from 'react'
 
 const NextForecast = ({ weatherData }) => {
-  // 1. 🎯 API'den gelen saatlik sıcaklık listesini güvenle alıyoruz
+  const currentHour = new Date().getHours();
   const temperatures = weatherData?.hourly?.temperature_2m || [];
-  const tomorrowTemp = temperatures[24] !== undefined ? `${temperatures[24]}°C` : "0°C";
-  const nextDayTemp = temperatures[48] !== undefined ? `${temperatures[48]}°C` : "0°C";
+const tomorrowTemp = temperatures[24 + currentHour] !== undefined ? `${temperatures[24 + currentHour]}°C` : "0°C";
+  const nextDayTemp = temperatures[48 + currentHour] !== undefined ? `${temperatures[48 + currentHour]}°C` : "0°C";
   return (
 <View style={styles.wrappercont}>
 <View style={styles.Container}>
